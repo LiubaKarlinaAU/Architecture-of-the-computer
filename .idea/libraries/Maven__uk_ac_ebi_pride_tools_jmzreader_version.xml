@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: uk.ac.ebi.pride.tools:jmzreader:version">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/pride/tools/jmzreader/version/jmzreader-version.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/pride/tools/jmzreader/version/jmzreader-version-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/uk/ac/ebi/pride/tools/jmzreader/version/jmzreader-version-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
