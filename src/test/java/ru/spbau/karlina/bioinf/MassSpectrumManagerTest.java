@@ -1,9 +1,13 @@
 package ru.spbau.karlina.bioinf;
 
 import org.junit.Test;
+import org.xml.sax.SAXException;
 
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.io.PrintStream;
+import java.util.LinkedList;
 
 import static org.junit.Assert.*;
 
@@ -14,10 +18,10 @@ public class MassSpectrumManagerTest {
     public void showFirst3MassSpectrums() throws Exception {
         System.setOut(new PrintStream(outContent));
 
-        String fileName = "/home/liuba/selfwork/bio_inf/src/main/resources/001.tsv";
+        String fileName = "src/main/resources/001.tsv";
         MassSpectrum[] array = MassSpectrumManager.getMassSpectrumsId(3, fileName);
         for (MassSpectrum spectrum : array) {
-            spectrum.showDetails();
+            spectrum.showMainDetails();
         }
 
         assertEquals("id = 8314;charge = 3;prMass = 1157.548;\n" +
@@ -32,7 +36,16 @@ public class MassSpectrumManagerTest {
         String fileName = "/home/liuba/selfwork/bio_inf/src/main/resources/001.tsv";
         MassSpectrum[] array = MassSpectrumManager.getMassSpectrumsId(3, fileName);
         for (MassSpectrum spectrum : array) {
-            spectrum.showDetails();
+            spectrum.showMainDetails();
+        }
+    }
+
+    @Test
+    public void getData() throws ParserConfigurationException, SAXException, IOException {
+        String fileName = "/home/liuba/selfwork/bioSupport/data/140509QXc1_car_anh_tryp_001.mzXML";
+        LinkedList<MassSpectrum> list = MassSpectrumManager.getData(fileName);
+        for (MassSpectrum spectrum : list) {
+            spectrum.showCandidateDetails();
         }
     }
 }
