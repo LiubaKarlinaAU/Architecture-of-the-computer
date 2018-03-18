@@ -5,12 +5,13 @@ import java.util.LinkedList;
 
 import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
 
 
 public class MassSpectrum {
     private Double ProtonMass = 1.6726219e-27;
     private int id;
-    private Integer num;
+    private Long num;
     private int charge;
     private Double precursorMass;
 
@@ -32,29 +33,27 @@ public class MassSpectrum {
 
     public MassSpectrum(String[] line) {
         id = parseId(line[1]);
-    //    num = parseInt(line[2]);
+        num = parseLong(line[2]);
         evalue = parseDouble(line[13]);
         charge = parseInt(line[7]);
         peptid = line[8];
         precursorMass = parseDouble(line[4]);
         delta = parseDouble(line[6]);
     }
-/*
+
     public MassSpectrum(Long num, Duration retentionTime, float precursorMz) {
         this.num = num;
         this.retentionTime = retentionTime;
-        this.precursorMz = precursorMz;
-    } */
-
-    public MassSpectrum(String num, Double precursorMz) {
-        System.out.println(precursorMz);
-        this.num = parseInt(num);
-        this.precursorMz = precursorMz;
-        System.out.println(this.precursorMz);
+        this.precursorMz = (double) precursorMz;
     }
 
-    private double parseRetentionTime(String string) {
-        return parseDouble(string.substring(2, string.length() - 1));
+    public MassSpectrum(String num, Double precursorMz) {
+        this.num = parseLong(num);
+        this.precursorMz = precursorMz;
+    }
+
+    public Duration getRetentionTime() {
+        return retentionTime;
     }
 
     private int parseId(String string) {
@@ -62,7 +61,6 @@ public class MassSpectrum {
     }
 
     public void showMainDetails() {
-        System.out.print("id = " + id + ";");
         System.out.print("num = " + num + ";");
         System.out.print("charge = " + charge + ";");
         System.out.println("prMass = " + precursorMass + ";");
