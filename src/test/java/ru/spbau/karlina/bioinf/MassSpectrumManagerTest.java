@@ -13,7 +13,7 @@ import static org.junit.Assert.*;
 
 public class MassSpectrumManagerTest {
     private final ByteArrayOutputStream outContent = new ByteArrayOutputStream();
-
+/*
     @Test
     public void showFirst3MassSpectrums() throws Exception {
         System.setOut(new PrintStream(outContent));
@@ -39,11 +39,14 @@ public class MassSpectrumManagerTest {
             spectrum.showMainDetails();
         }
     }
-
+*/
     @Test
     public void getData() throws ParserConfigurationException, SAXException, IOException {
         String fileName = "/home/liuba/selfwork/bioSupport/data/140509QXc1_car_anh_tryp_001.mzXML";
+        //MassSpectrumManager.getData(fileName);
+
         LinkedList<MassSpectrum> list = MassSpectrumManager.getData(fileName);
+
         for (MassSpectrum spectrum : list) {
             spectrum.showCandidateDetails();
         }
