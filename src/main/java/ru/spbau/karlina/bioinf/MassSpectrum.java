@@ -10,8 +10,14 @@ import static java.lang.Math.abs;
 
 
 public class MassSpectrum {
-    /** Constants */
-    public enum TYPE {IDENTIFIED, CANDIDATE}
+
+    /**
+     * Constants
+     */
+    public enum TYPE {
+        IDENTIFIED, CANDIDATE
+    }
+
     private static final Double PROTON_MASS = 1.007825;
     private static final Double ERROR = 0.00001;
 
@@ -27,8 +33,11 @@ public class MassSpectrum {
     private double delta;
     private String peptid;
 
-    /** Constructor for mass spectrum from tsv file format
-     * @param line - string of all needed information */
+    /**
+     * Constructor for mass spectrum from tsv file format
+     *
+     * @param line - string of all needed information
+     */
     public MassSpectrum(String[] line) {
         num = parseLong(line[2]);
         evalue = parseDouble(line[13]);
@@ -46,6 +55,11 @@ public class MassSpectrum {
         this.precursorMz = precursorMz;
     }
 
+
+    public void setRetentionTime(double retentionTime) {
+        this.retentionTime = retentionTime;
+    }
+
     public double getRetentionTime() {
         return retentionTime;
     }
@@ -53,21 +67,25 @@ public class MassSpectrum {
     public void showMainDetails() {
         System.out.print("id = " + num + ";");
         System.out.print("charge = " + charge + ";");
+        System.out.print("rTime = " + retentionTime + ";");
         System.out.println("prMass = " + precursorMass + ";");
+        System.out.println("peptid = " + peptid);
     }
 
     public void showCandidateDetails() {
         System.out.print("num = " + num + ";");
         System.out.print("rTime = " + retentionTime + ";");
-        System.out.println("prMz = " + precursorMz + ";");
+        System.out.println("prMass = " + precursorMass + ";");
     }
 
     public boolean match(MassSpectrum spec) {
         LinkedList<Double> list = makePossiblePrecursorMass();
 
         for (Double mass : list) {
-            if (abs(spec.getPrecursorMass() - mass) < ERROR * spec.getPrecursorMass())
+            if (abs(spec.getPrecursorMass() - mass) < ERROR * spec.getPrecursorMass()) {
+                precursorMass = mass;
                 return true;
+            }
         }
 
         return false;

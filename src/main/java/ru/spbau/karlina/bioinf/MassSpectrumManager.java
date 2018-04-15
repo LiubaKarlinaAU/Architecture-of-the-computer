@@ -92,7 +92,6 @@ public class MassSpectrumManager {
             ArrayList<MassSpectrum> spectrums, ArrayList<MassSpectrum> scans) {
         HashMap<MassSpectrum, LinkedList<MassSpectrum>> hashMap = new HashMap<>();
         spectrums.sort(Comparator.comparingLong(o -> o.getId()));
-        System.out.println(spectrumNumbers.size());
 
         int current = 0;
         for (MassSpectrum spectrum : spectrums) {
@@ -114,14 +113,17 @@ public class MassSpectrumManager {
                 candidate--;
             }
 
+            candidate++;
             while (candidate < scans.size() && abs(rTime - scans.get(candidate).getRetentionTime()) < TIME_SECONDS) {
                 if (scans.get(candidate).match(spectrum)) {
                     list.add(scans.get(candidate));
                 }
+                candidate++;
             }
 
 
             if (list.size() != 0) {
+                spectrum.setRetentionTime(rTime);
                 hashMap.put(spectrum, list);
             }
         }

@@ -18,9 +18,9 @@ public class ParserXML {
         ArrayList<MassSpectrum> list = new ArrayList<>();
         try {
             Scanner scanner  = new Scanner(new File(fileName));
-            while (scanner.hasNextLine() && count < 100) {
-                String current = scanner.nextLine();
-                if (current.startsWith("  <scan")) {
+            while (scanner.hasNextLine()) {
+                String current = scanner.nextLine().trim();
+                if (current.startsWith("<scan")) {
                     parseOneSpectrum(current, scanner, list);
                 }
             }
@@ -28,35 +28,31 @@ public class ParserXML {
             System.out.println("Parsing mzXML file problem.");
             e.printStackTrace();
         }
-        System.out.println(count1);
          return list;
 
     }
 
     static private void parseOneSpectrum(String firstLine, Scanner scanner,
                                           ArrayList<MassSpectrum> list) {
-      String second = scanner.nextLine();
-        if (second.charAt(12) == '2') {
-          long num = parseLong(firstLine.substring(5));
-          double precMz = 0, rTime = 0;
-          while (scanner.hasNextLine()) {
-              String current = scanner.nextLine();
+      String second = scanner.nextLine().trim();
+        if (second.charAt(9) == '2') {
+            long num = parseLong(firstLine.substring(11, firstLine.length() - 1));
+            double precMz = 0, rTime = 0;
+            while (scanner.hasNextLine()) {
+                String current = scanner.nextLine().trim();
 
-              if (current.equals("</scan>")) {
-                  list.add(new MassSpectrum(num, rTime, precMz));
-                  count++;
-                  return;
-              }
+                if (current.equals("</scan>")) {
+                    list.add(new MassSpectrum(num, rTime, precMz));
+                    count++;
+                    return;
+                }
 
-              if (current.matches("^<retentionTime")) {
-                  rTime = parseDouble(current.substring(17));
-              } else if (current.matches("^<precursorMz")) {
-                  precMz = 0;
-              }
-          }
-      } else {
-            System.out.println(second.charAt(12));
-            count1++;
+                if (current.startsWith("retentionTime")) {
+                    rTime = parseDouble(current.substring(17, current.length() - 2));
+                } else if (current.startsWith("<precursorMz")) {
+                    precMz = parseDouble(current.substring(current.indexOf('>') + 1, current.length() - 14));
+                }
+            }
         }
     }
 }
