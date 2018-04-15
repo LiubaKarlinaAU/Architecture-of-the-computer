@@ -1,6 +1,5 @@
 package ru.spbau.karlina.bioinf;
 
-import javax.xml.datatype.Duration;
 import java.util.LinkedList;
 
 import static java.lang.Double.parseDouble;
@@ -8,7 +7,10 @@ import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 import static java.lang.Math.abs;
 
-
+/**
+ * Mass spectrum representation class
+ * Is using for storing data, setting and showing it
+ */
 public class MassSpectrum {
 
     /**
@@ -48,22 +50,25 @@ public class MassSpectrum {
         type = TYPE.IDENTIFIED;
     }
 
-
+    /**
+     * Constructor for candidate mass spectrums from mzXML file format
+     *
+     * @param num           - spectrum id
+     * @param retentionTime - spectrum retention time
+     * @param precursorMz   - spectrum mass that we can use to calculate
+     *                      precursor mass using spectrum charge
+     */
     public MassSpectrum(long num, double retentionTime, double precursorMz) {
         this.num = num;
         this.retentionTime = retentionTime;
         this.precursorMz = precursorMz;
+        type = TYPE.CANDIDATE;
     }
 
-
-    public void setRetentionTime(double retentionTime) {
-        this.retentionTime = retentionTime;
-    }
-
-    public double getRetentionTime() {
-        return retentionTime;
-    }
-
+    /**
+     * Showing main spectrum details
+     * It is intended to be used for identified spectrum
+     */
     public void showMainDetails() {
         System.out.print("id = " + num + ";");
         System.out.print("charge = " + charge + ";");
@@ -72,12 +77,24 @@ public class MassSpectrum {
         System.out.println("peptid = " + peptid);
     }
 
+    /**
+     * Showing main spectrum details
+     * It is intended to be used for candidate spectrum
+     */
     public void showCandidateDetails() {
         System.out.print("num = " + num + ";");
         System.out.print("rTime = " + retentionTime + ";");
         System.out.println("prMass = " + precursorMass + ";");
     }
 
+    /**
+     * Check is this spectrum suitable to be candidate for given one
+     * Make possible precursor mass and compare difference
+     *
+     * @param spec - spectrum for searching candidates
+     * @return true if one of possible mass is suit given spectrum(and that mass is setted)
+     *         false - otherwise
+     */
     public boolean match(MassSpectrum spec) {
         LinkedList<Double> list = makePossiblePrecursorMass();
 
@@ -91,17 +108,40 @@ public class MassSpectrum {
         return false;
     }
 
+    /**
+     * Retention time setter
+     *
+     * @param retentionTime - to be set
+     */
+    public void setRetentionTime(double retentionTime) {
+        this.retentionTime = retentionTime;
+    }
+
+    /**
+     * Retention time getter
+     *
+     * @return (double) retention time
+     */
+    public double getRetentionTime() {
+        return retentionTime;
+    }
+
+    /**
+     * Id getter
+     *
+     * @return (long) id
+     */
     public long getId() {
         return num;
     }
 
+    /**
+     * Precursor mass getter
+     *
+     * @return (double) precursor mass
+     */
     public double getPrecursorMass() {
         return precursorMass;
-    }
-
-    private int parseRetentionTime(String string) {
-        String str = string.substring(4);
-        return parseInt(str.substring(0, str.length() - 1));
     }
 
     private LinkedList<Double> makePossiblePrecursorMass() {

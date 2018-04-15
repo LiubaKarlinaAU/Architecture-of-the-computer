@@ -10,9 +10,7 @@ import static java.lang.Long.parseLong;
 
 /** Special parser for mzXML
  *  Recognizes only scan number, retention time and precursorMZ */
-public class ParserXML {
-    public static int count = 0;
-    public static int count1 = 0;
+public class ParserMZXML {
 
     static public ArrayList<MassSpectrum> getData(String fileName) {
         ArrayList<MassSpectrum> list = new ArrayList<>();
@@ -43,7 +41,6 @@ public class ParserXML {
 
                 if (current.equals("</scan>")) {
                     list.add(new MassSpectrum(num, rTime, precMz));
-                    count++;
                     return;
                 }
 
