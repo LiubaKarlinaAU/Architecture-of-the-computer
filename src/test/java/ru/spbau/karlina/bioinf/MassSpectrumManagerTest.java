@@ -2,6 +2,8 @@ package ru.spbau.karlina.bioinf;
 
 import org.junit.Test;
 import org.xml.sax.SAXException;
+import ru.spbau.karlina.bioinf.fileParsing.MassSpectrum;
+import ru.spbau.karlina.bioinf.fileParsing.MassSpectrumManager;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;

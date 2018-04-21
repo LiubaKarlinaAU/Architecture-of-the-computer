@@ -1,4 +1,4 @@
-package ru.spbau.karlina.bioinf;
+package ru.spbau.karlina.bioinf.verification;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -26,7 +26,8 @@ public class Verification {
         theoryMass.sort(Double::compareTo);
     }
 
-    public boolean makeVerification(String peptid) {
+    public boolean makeVerification(String peptidString) {
+        Peptid peptid1 = new Peptid(peptidString);
         return false;
     }
 

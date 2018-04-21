@@ -1,4 +1,4 @@
-package ru.spbau.karlina.bioinf;
+package ru.spbau.karlina.bioinf.fileParsing;
 
 import com.univocity.parsers.tsv.TsvParser;
 import com.univocity.parsers.tsv.TsvParserSettings;

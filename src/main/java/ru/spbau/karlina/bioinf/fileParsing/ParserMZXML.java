@@ -1,4 +1,4 @@
-package ru.spbau.karlina.bioinf;
+package ru.spbau.karlina.bioinf.fileParsing;
 
 import java.io.File;
 import java.io.FileNotFoundException;
