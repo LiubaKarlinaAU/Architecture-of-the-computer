@@ -4,6 +4,7 @@ import org.junit.Test;
 import org.xml.sax.SAXException;
 import ru.spbau.karlina.bioinf.fileParsing.MassSpectrum;
 import ru.spbau.karlina.bioinf.fileParsing.MassSpectrumManager;
+import ru.spbau.karlina.bioinf.verification.Verification;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayOutputStream;
@@ -92,4 +93,23 @@ public class MassSpectrumManagerTest {
         }
     }
 
+    @Test
+    public void representOfWorkingTest2() throws Exception {
+        ArrayList<MassSpectrum> spectrumList = MassSpectrumManager.getReliableMassSpectrums(250, tsvFileName1);
+
+        ArrayList<MassSpectrum> list = MassSpectrumManager.getData(mzXMLFileName1);
+
+        HashMap<MassSpectrum, LinkedList<MassSpectrum>> hashMap = MassSpectrumManager.findingCandidates(spectrumList, list);
+
+        for (Map.Entry entry : hashMap.entrySet()) {
+            ((MassSpectrum) entry.getKey()).showMainDetails();
+            for (MassSpectrum spectrum : (LinkedList<MassSpectrum>) entry.getValue()) {
+                spectrum.showCandidateDetails();
+                String peptid = spectrum.getPeptid();
+                //Verification verification = new Verification("src/main/resources/theory_mass.txt", peptid);
+                //verification.makeVerification();
+            }
+            System.out.println("");
+        }
+    }
 }

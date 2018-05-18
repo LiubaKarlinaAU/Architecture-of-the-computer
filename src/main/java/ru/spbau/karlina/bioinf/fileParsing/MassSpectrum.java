@@ -152,4 +152,6 @@ public class MassSpectrum {
 
         return list;
     }
+
+    public String getPeptid() { return peptid; }
 }
