@@ -67,15 +67,15 @@ public class Peptid {
      * Calculate picks that we can prove with peptid variation
      * @param writer
      */
-    public void makeVariationVerification(BufferedWriter writer) throws IOException {
+    public void makePeptidVerification(BufferedWriter writer) throws IOException {
         int index = 0;
         double diff = 22.989222 - 1.007825;
         for (PeptidPair pair : components) {
             if (pair.acid == AminoAcid.E || pair.acid == AminoAcid.D) {
-                pair.changeMass(diff);
+                pair.addMass(diff);
                 makeVariationChecking(index, writer);
                 writer.newLine();
-                pair.changeMass(-diff);
+                pair.addMass(-diff);
             }
 
             index++;
@@ -98,30 +98,21 @@ public class Peptid {
             counter++;
         }
         ArrayList<Pair<Double, Piece>> list  = massChecking(massCounting());
-        writer.write("\nFrom " + theoryMass.size() + " are suited us only " + list.size() + "\n");
+        writer.newLine();
+        writer.write("From " + theoryMass.size() + " are suited us only " + list.size() + "\n");
+        writer.newLine();
         showDifference(list, writer);
     }
 
     private void showDifference(ArrayList<Pair<Double, Piece>> list, BufferedWriter writer) throws IOException {
        for (Pair<Double, Piece> pair : list) {
            writer.write( pair.getValue().getType() +
-                   " theory: "  + pair.getKey() +
-                   " real: " + pair.getValue().getMass() +
+                   " real: "  + pair.getKey() +
+                   " theory: " + pair.getValue().getMass() +
                    " diff: " + Math.abs(pair.getValue().getMass() - pair.getKey()));
            writer.newLine();
            writer.newLine();
        }
-    }
-
-    /**
-     * Calculate picks that we can prove with this peptid
-     * @param writer
-     */
-    public boolean makePeptidVerification(BufferedWriter writer) throws IOException {
-        ArrayList<Pair<Double, Piece>> list  = massChecking(massCounting());
-        writer.write("\nFrom " + theoryMass.size() + " are suited us only " + list.size() + "\n");
-        showDifference(list, writer);
-        return false;
     }
 
     private class PeptidPair {
@@ -165,6 +156,7 @@ public class Peptid {
         Collections.sort(candidatePieces);
         int ind = 0;
         for (Piece piece : candidatePieces) {
+
             while (ind < theoryMass.size() && theoryMass.get(ind) < piece.getMass()) {
                 ind++;
             }

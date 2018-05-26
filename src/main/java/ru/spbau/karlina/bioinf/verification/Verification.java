@@ -55,8 +55,7 @@ public class Verification {
     }
 
     public void makeVerification() throws IOException {
-        peptid.makeVariationVerification(writer);
-        //peptid.makePeptidVerification(writer);
+        peptid.makePeptidVerification(writer);
         writer.flush();
     }
 

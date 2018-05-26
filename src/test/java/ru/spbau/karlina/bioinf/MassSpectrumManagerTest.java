@@ -91,6 +91,7 @@ public class MassSpectrumManagerTest {
             }
             System.out.println("");
         }
+        System.out.println(22.989222 - 1.007825);
     }
 
     @Test
@@ -106,6 +107,7 @@ public class MassSpectrumManagerTest {
             for (MassSpectrum spectrum : (LinkedList<MassSpectrum>) entry.getValue()) {
                 spectrum.showCandidateDetails();
                 String peptid = spectrum.getPeptid();
+                System.out.println(peptid);
                 //Verification verification = new Verification("src/main/resources/theory_mass.txt", peptid);
                 //verification.makeVerification();
             }

@@ -84,6 +84,7 @@ public class MassSpectrum {
     public void showCandidateDetails() {
         System.out.print("num = " + num + ";");
         System.out.print("rTime = " + retentionTime + ";");
+        System.out.print("charge = " + charge + ";");
         System.out.println("prMass = " + precursorMass + ";");
     }
 
@@ -101,6 +102,7 @@ public class MassSpectrum {
         for (Double mass : list) {
             if (abs(spec.getPrecursorMass() - mass) < ERROR * spec.getPrecursorMass()) {
                 precursorMass = mass;
+                makeCharge();
                 return true;
             }
         }
@@ -151,6 +153,14 @@ public class MassSpectrum {
         }
 
         return list;
+    }
+
+    private void makeCharge() {
+        for (int i = 2; i < 6; ++i) {
+            if((precursorMz - PROTON_MASS) * i == precursorMass) {
+                charge = i;
+            }
+        }
     }
 
     public String getPeptid() { return peptid; }
